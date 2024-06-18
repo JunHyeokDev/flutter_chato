@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1016721611740",
+    "project_id": "flutter-chato-5abf5",
+    "storage_bucket": "flutter-chato-5abf5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1016721611740:android:bf191959d0ab6b794c4d19",
+        "android_client_info": {
+          "package_name": "com.example.chato"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB3emXhjvVOiA7fCrTmh_8G-XrVyQO5M-E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
