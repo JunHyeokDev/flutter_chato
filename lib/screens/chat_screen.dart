@@ -8,14 +8,14 @@ import '../chatting/chat/new_message.dart';
 
 
 class ChatScreen extends StatefulWidget {
-  const ChatScreen({super.key});
+  final String chatId;
+  const ChatScreen({super.key, required this.chatId});
 
   @override
   State<ChatScreen> createState() => _ChatScreenState();
 }
 
 class _ChatScreenState extends State<ChatScreen> {
-  final _chatID = 'N3i2VMLrTLGQAvpzxaMe';
   final _authentication = FirebaseAuth.instance;
   User? loginedUser;
 
@@ -23,10 +23,10 @@ class _ChatScreenState extends State<ChatScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    getCurrentUser();
+    _getCurrentUser();
   }
 
-  void getCurrentUser(){
+  void _getCurrentUser(){
     try {
       final user = _authentication.currentUser;
       if (user != null) {
@@ -54,8 +54,10 @@ class _ChatScreenState extends State<ChatScreen> {
       body: Container(
         child: Column(
           children: [
-            Expanded(child: Messages()),
-            NewMesasge(),
+            // Expanded(child: Messages()),
+            // NewMesasge(),
+            Expanded(child: Messages(chatId: widget.chatId)),
+            NewMessage(chatId: widget.chatId),
           ],
         ),
       ),

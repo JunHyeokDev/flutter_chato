@@ -2,14 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-class NewMesasge extends StatefulWidget {
-  const NewMesasge({super.key});
+class NewMessage extends StatefulWidget {
+  final String chatId;
+  const NewMessage({super.key, required this.chatId});
 
   @override
-  State<NewMesasge> createState() => _NewMesasgeState();
+  State<NewMessage> createState() => _NewMessageState();
 }
 
-class _NewMesasgeState extends State<NewMesasge> {
+class _NewMessageState extends State<NewMessage> {
   final _controller = TextEditingController();
   final user = FirebaseAuth.instance.currentUser!;
   var _userEnterMessage = '';
@@ -17,13 +18,23 @@ class _NewMesasgeState extends State<NewMesasge> {
   void _sendMessage() async {
     FocusScope.of(context).unfocus();
     final userData = await FirebaseFirestore.instance.collection('user').doc(user.uid).get();
-    FirebaseFirestore.instance.collection('chat').add({
+    FirebaseFirestore.instance
+        .collection('chats')
+        .doc(widget.chatId)
+        .collection('messages')
+        .add({
       'text': _userEnterMessage,
       'time': Timestamp.now(),
       'userID': user.uid,
       'userName' : userData.data()!['userName'],
       'userImage' : userData.data()!['picked_image'],
     });
+
+    await FirebaseFirestore.instance
+        .collection('chats')
+        .doc(widget.chatId)
+        .update({'lastMessage': _userEnterMessage});
+
     _controller.clear();
   }
 
