@@ -2,9 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 
-
-
-
 class AddImage extends StatefulWidget {
   const AddImage({super.key, required this.addImageFunc});
 
@@ -15,21 +12,50 @@ class AddImage extends StatefulWidget {
 }
 
 class _AddImageState extends State<AddImage> {
-
   File? pickedImage;
-  void _pickImage() async {
+
+  void _pickImage(ImageSource source) async {
     final imagePicker = ImagePicker();
     final pickedImageFile = await imagePicker.pickImage(
-        source: ImageSource.camera,
-        imageQuality: 50,
-        maxHeight: 150,
+      source: source,
+      imageQuality: 50,
+      maxHeight: 150,
     );
     setState(() {
-      if(pickedImageFile != null) {
+      if (pickedImageFile != null) {
         pickedImage = File(pickedImageFile.path);
       }
     });
-    widget.addImageFunc(pickedImage!);
+    if (pickedImage != null) {
+      widget.addImageFunc(pickedImage!);
+    }
+  }
+
+  void _showPickOptionsDialog(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (context) => Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          ListTile(
+            leading: Icon(Icons.camera),
+            title: Text('Take a picture'),
+            onTap: () {
+              Navigator.of(context).pop();
+              _pickImage(ImageSource.camera);
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.photo_library),
+            title: Text('Choose from gallery'),
+            onTap: () {
+              Navigator.of(context).pop();
+              _pickImage(ImageSource.gallery);
+            },
+          ),
+        ],
+      ),
+    );
   }
 
   @override
@@ -39,22 +65,22 @@ class _AddImageState extends State<AddImage> {
         CircleAvatar(
           radius: 40,
           backgroundColor: Colors.blue,
-          backgroundImage: pickedImage != null ?  FileImage(pickedImage!) : null,
+          backgroundImage: pickedImage != null ? FileImage(pickedImage!) : null,
         ),
-        SizedBox(height: 10,),
+        SizedBox(height: 10),
         OutlinedButton.icon(
-          onPressed: (){
-            print("클릭??");
-            _pickImage();
+          onPressed: () {
+            _showPickOptionsDialog(context);
           },
-          label: Text("add Photo"),
+          label: Text("Add Photo"),
           icon: Icon(Icons.image),
         ),
-        SizedBox(height: 80,),
-        TextButton.icon(onPressed: (){
-          Navigator.pop(context);
-        },
-          label: Text("close"),
+        SizedBox(height: 80),
+        TextButton.icon(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          label: Text("Close"),
           icon: Icon(Icons.close),
         ),
       ],

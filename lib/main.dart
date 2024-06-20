@@ -1,9 +1,11 @@
 import 'package:chato/screens/chat_screen.dart';
-import 'package:chato/screens/main_screen.dart';
+import 'package:chato/screens/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+
+import 'screens/main_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,6 +22,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner : false,
       title: 'Chato!',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
@@ -31,7 +34,7 @@ class MyApp extends StatelessWidget {
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot ) {
           if (snapshot.hasData) {
-            return ChatScreen();
+            return MainScreen();
           }
           return LoginSignupScreen();
         },

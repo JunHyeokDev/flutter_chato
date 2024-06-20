@@ -14,23 +14,52 @@ class ChatBubble extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
-      children: [
+      children: isMe
+          ? [
         Column(
-          crossAxisAlignment: isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-          Text(userName, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),
-          BubbleSpecialThree(
-            text: message,
-            color: isMe ? Color(0xFF1B97F3) : Colors.brown[100]!,
-            tail: true,
-            isSender: isMe,
-            textStyle: TextStyle(
-                color: isMe ? Colors.white : Colors.black, fontSize: 16),
-          ),
-        ],),
+            Text(
+              userName,
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            BubbleSpecialThree(
+              text: message,
+              color: isMe ? Color(0xFF1B97F3) : Colors.brown[100]!,
+              tail: true,
+              isSender: isMe,
+              textStyle: TextStyle(
+                  color: isMe ? Colors.white : Colors.black, fontSize: 16),
+            ),
+
+          ],
+        ),
         CircleAvatar(
           backgroundImage: NetworkImage(userImage),
         ),
+      ]
+          : [
+        CircleAvatar(
+          backgroundImage: NetworkImage(userImage),
+        ),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              userName,
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            BubbleSpecialThree(
+              text: message,
+              color: isMe ? Color(0xFF1B97F3) : Colors.brown[100]!,
+              tail: true,
+              isSender: isMe,
+              textStyle: TextStyle(
+                  color: isMe ? Colors.white : Colors.black, fontSize: 16),
+            ),
+          ],
+        ),
+
       ],
     );
   }
