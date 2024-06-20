@@ -25,7 +25,8 @@ Very Simple Chatting app.
 
 ### Simple chatting!
 
-![image](https://github.com/JunHyeokDev/flutter_chato/assets/120662329/4348de9a-72c8-4a1f-821d-7f0af9467368)
+![화면 기록 2024-06-20 오전 11 44 15](https://github.com/JunHyeokDev/flutter_chato/assets/120662329/cec985d9-f690-4d51-9e50-a763b63dac03)
+
 
 ## Getting Started
 
